@@ -146,9 +146,9 @@ router.post("/register", async (req, res) => {
       studentId,
     });
 
-  } catch (error) {
-    console.error("REGISTER ERROR:", error);
-    res.status(500).json({ success: false, error: "Server error" });
+  } catch (err) {
+    console.error("REGISTER ERROR:", err);
+    res.status(500).json({ error: err.message });
   }
 });
 
