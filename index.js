@@ -21,6 +21,7 @@ import adminUploads from "./routes/adminUploads.js";
 import lessonsRoutes from "./routes/lessons.js";
 import studentAuth from "./routes/studentAuth.js";
 import studentLessons from "./routes/studentLessons.js";
+import paymentsRoutes from "./routes/payments.js";
 
 
 
@@ -45,6 +46,7 @@ app.use("/api/admin", adminUploads);
 app.use("/api/lessons", lessonsRoutes);
 app.use("/api/studentAuth", studentAuth);
 app.use("/api/studentLessons", studentLessons);
+app.use("/api/payments", paymentsRoutes);
 
 
 // import studentAuthRoutes from "./routes/studentAuth.js";
