@@ -48,19 +48,6 @@ router.post("/stk-push", async (req, res) => {
   }
 });
  
-
-// This is my
-// router.post("/callback", (req, res) => {
-//   console.log("📩 MPESA CALLBACK:", JSON.stringify(req.body, null, 2));
-
-//   res.status(200).json({
-//     ResultCode: 0,
-//     ResultDesc: "Accepted",
-//   });
-// });
-
-// Mpesa callback
-
 router.post("/callback", async (req, res) => {
   try {
     const callback = req.body?.Body?.stkCallback;
@@ -79,12 +66,30 @@ router.post("/callback", async (req, res) => {
 
     if (ResultCode === 0) {
       // ✅ Payment successful
+      // await pool.query(
+      //   `UPDATE payments
+      //    SET payment_status = 'PAID'
+      //    WHERE checkout_request_id = $1`,
+      //   [CheckoutRequestID]
+      // );
+
+      const metadata = callback.CallbackMetadata?.Item || [];
+
+      const mpesaReceipt = metadata.find(
+        item => item.Name === "MpesaReceiptNumber"
+      )?.Value;
+
+      // ✅ Update payments table
       await pool.query(
-        `UPDATE students
-         SET payment_status = 'PAID'
-         WHERE checkout_request_id = $1`,
-        [CheckoutRequestID]
+        `UPDATE payments
+        SET status = 'SUCCESS',
+            transaction_id = $1
+        WHERE checkout_request_id = $2`,
+        [mpesaReceipt, CheckoutRequestID]
       );
+
+      console.log("✅ Payment SUCCESS:", mpesaReceipt);
+
     } else {
       // ❌ Payment failed or cancelled
       await pool.query(
