@@ -65,14 +65,7 @@ router.post("/callback", async (req, res) => {
     console.log("📩 MPESA CALLBACK:", callback);
 
     if (ResultCode === 0) {
-      // ✅ Payment successful
-      // await pool.query(
-      //   `UPDATE payments
-      //    SET payment_status = 'PAID'
-      //    WHERE checkout_request_id = $1`,
-      //   [CheckoutRequestID]
-      // );
-
+      
       const metadata = callback.CallbackMetadata?.Item || [];
 
       const mpesaReceipt = metadata.find(
