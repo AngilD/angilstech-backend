@@ -22,6 +22,7 @@ import lessonsRoutes from "./routes/lessons.js";
 import studentAuth from "./routes/studentAuth.js";
 import studentLessons from "./routes/studentLessons.js";
 import paymentsRoutes from "./routes/payments.js";
+import paypalRoutes from "./routes/paypal.js";
 
 
 
@@ -47,6 +48,7 @@ app.use("/api/lessons", lessonsRoutes);
 app.use("/api/studentAuth", studentAuth);
 app.use("/api/studentLessons", studentLessons);
 app.use("/api/payments", paymentsRoutes);
+app.use("/api/payments/paypal", paypalRoutes);
 
 
 // import studentAuthRoutes from "./routes/studentAuth.js";
