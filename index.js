@@ -26,15 +26,14 @@ import paypalRoutes from "./routes/paypal.js";
 
 
 
-
-
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: ["GET","POST","PUT","DELETE"],
-    allowedHeaders:["Content-Type","Authorization"],
-  })
-)
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://angilstech-frontend.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 // app.use(express.json);
 app.use(express.json())
