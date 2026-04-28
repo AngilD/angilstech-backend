@@ -8,22 +8,31 @@ const upload = multer({ storage });
 
 router.post("/upload-content", upload.single("file"), async (req, res) => {
   try {
-    const { title, description } = req.body;
-    const file = req.file;
+    
+     const { title, description, track } = req.body;
 
-    if (!file) {
+     console.log("BODY:",req.body);
+
+      const file = req.file;
+
+      if (!file) {
       return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    if(!track){
+      return res.status(400).json({error:"Track required"});
     }
 
     // Save lesson to DB
     const result = await pool.query(
       `INSERT INTO lessons 
-        (title, description, cloudinary_public_id, resource_type, secure_url)
-       VALUES ($1, $2, $3, $4, $5)
+        (title, description, track, cloudinary_public_id, resource_type, secure_url)
+       VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING *`,
       [
         title,
         description,
+        track,
         file.filename,     // Cloudinary public_id
         file.mimetype,     // video/mp4, application/pdf
         file.path          // secure_url

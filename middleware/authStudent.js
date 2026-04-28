@@ -12,10 +12,9 @@ export default function authStudent(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (decoded.payment_status !== "PAID") {
-      return res.status(403).json({ error: "Payment required" });
-    }
-
+    // if (decoded.payment_status !== "PAID") {
+    //   return res.status(403).json({ error: "Payment required" });
+    // }
     req.student = decoded;
     next();
 
