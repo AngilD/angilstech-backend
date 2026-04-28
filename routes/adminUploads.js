@@ -11,7 +11,7 @@ router.post("/upload-content", upload.single("file"), async (req, res) => {
     
      const { title, description, track } = req.body;
 
-     console.log("BODY:",req.body);
+    //  console.log("BODY:",req.body);
 
       const file = req.file;
 
