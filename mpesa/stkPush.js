@@ -15,8 +15,33 @@ export const sendSTKPush = async (phone, amount) => {
     timestamp
   ).toString("base64");
 
+  // const response = await axios.post(
+  //   "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+  //   {
+  //     BusinessShortCode: process.env.MPESA_SHORTCODE,
+  //     Password: password,
+  //     Timestamp: timestamp,
+  //     TransactionType: "CustomerPayBillOnline",
+  //     Amount: amount,
+  //     PartyA: phone,
+  //     PartyB: process.env.MPESA_SHORTCODE,
+  //     PhoneNumber: phone,
+  //     CallBackURL: process.env.MPESA_CALLBACK_URL,
+  //     AccountReference: "AngilsTech",
+  //     TransactionDesc: "Tech Club Registration"
+  //   },
+  //   {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   }
+  // );
+
+  // return response.data;
+
+  try {
   const response = await axios.post(
-    "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+    "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
     {
       BusinessShortCode: process.env.MPESA_SHORTCODE,
       Password: password,
@@ -28,7 +53,7 @@ export const sendSTKPush = async (phone, amount) => {
       PhoneNumber: phone,
       CallBackURL: process.env.MPESA_CALLBACK_URL,
       AccountReference: "AngilsTech",
-      TransactionDesc: "Tech Club Registration"
+      TransactionDesc: "Tech Club Registration",
     },
     {
       headers: {
@@ -38,4 +63,11 @@ export const sendSTKPush = async (phone, amount) => {
   );
 
   return response.data;
+
+} catch (error) {
+  console.log("MPESA ERROR:", error.response?.data);
+
+  throw error;
+}
+
 };

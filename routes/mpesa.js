@@ -13,20 +13,23 @@ router.post("/stk-push", async (req, res) => {
   const { phone, amount } = req.body;
 
   try {
+    const formattedPhone = phone.replace(/^0/, "254");
+
     const token = await getAccessToken();
+
     const { password, timestamp } = generatePassword();
 
     const response = await axios.post(
-      "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+      "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
       {
         BusinessShortCode: process.env.MPESA_SHORTCODE,
         Password: password,
         Timestamp: timestamp,
         TransactionType: "CustomerPayBillOnline",
         Amount: amount,
-        PartyA: phone,
+        PartyA: formattedPhone,
         PartyB: process.env.MPESA_SHORTCODE,
-        PhoneNumber: phone,
+        PhoneNumber: formattedPhone,
         CallBackURL: process.env.MPESA_CALLBACK_URL,
         AccountReference: "AngilsTech",
         TransactionDesc: "Payment",
@@ -39,12 +42,16 @@ router.post("/stk-push", async (req, res) => {
     );
 
     res.json(response.data);
+
   } catch (error) {
     console.error(
       "STK ERROR:",
       error.response?.data || error.message
     );
-    res.status(500).json({ error: "STK Push Failed" });
+
+    res.status(500).json({
+      error: error.response?.data || "STK Push Failed",
+    });
   }
 });
  
