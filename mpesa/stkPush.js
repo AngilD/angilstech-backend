@@ -18,33 +18,9 @@ export const sendSTKPush = async (phone, amount) => {
     timestamp
   ).toString("base64");
 
-  // const response = await axios.post(
-  //   "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
-  //   {
-  //     BusinessShortCode: process.env.MPESA_SHORTCODE,
-  //     Password: password,
-  //     Timestamp: timestamp,
-  //     TransactionType: "CustomerPayBillOnline",
-  //     Amount: amount,
-  //     PartyA: phone,
-  //     PartyB: process.env.MPESA_SHORTCODE,
-  //     PhoneNumber: phone,
-  //     CallBackURL: process.env.MPESA_CALLBACK_URL,
-  //     AccountReference: "AngilsTech",
-  //     TransactionDesc: "Tech Club Registration"
-  //   },
-  //   {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   }
-  // );
-
-  // return response.data;
-
-  try {
+   try {
     console.log("Phone sent:",formattedPhone);
-    
+
   const response = await axios.post(
     "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
     {
@@ -53,9 +29,9 @@ export const sendSTKPush = async (phone, amount) => {
       Timestamp: timestamp,
       TransactionType: "CustomerPayBillOnline",
       Amount: amount,
-      PartyA: phone,
+      PartyA: formattedPhone,
       PartyB: process.env.MPESA_SHORTCODE,
-      PhoneNumber: phone,
+      PhoneNumber: formattedPhone,
       CallBackURL: process.env.MPESA_CALLBACK_URL,
       AccountReference: "AngilsTech",
       TransactionDesc: "Tech Club Registration",
