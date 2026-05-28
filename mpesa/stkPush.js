@@ -2,6 +2,9 @@ import axios from "axios";
 import { getAccessToken } from "../mpesa/mPesaauth.js";
 
 export const sendSTKPush = async (phone, amount) => {
+
+  const formattedPhone = phone.replace(/^0/, "254");
+
   const token = await getAccessToken();
 
   const timestamp = new Date()
@@ -40,6 +43,8 @@ export const sendSTKPush = async (phone, amount) => {
   // return response.data;
 
   try {
+    console.log("Phone sent:",formattedPhone);
+    
   const response = await axios.post(
     "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
     {
