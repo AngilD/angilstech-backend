@@ -8,9 +8,9 @@ const router = express.Router();
 
 console.log("PAYPAL ROUTES LOADED");
 
-// router.get("/test", (req,res)=>{
-//   res.json({message: "Paypal route is ok"});
-// });
+router.get("/test", (req,res)=>{
+  res.json({message: "Paypal route is working"});
+});
 
 // ✅ CREATE ORDER
 router.post("/create-order", async (req, res) => {
