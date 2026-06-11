@@ -14,10 +14,11 @@ router.get("/test", (req,res)=>{
 
 // ✅ CREATE ORDER
 router.post("/create-order", async (req, res) => {
-  try {
-
+  
+    console.log("CREATE ORDER HIT");
     console.log("BODY:", req.body);
-    console.log("PAYPAL_BASE_URL:", process.env.PAYPAL_BASE_URL);
+    
+  try {
     
     const { amount } = req.body;
 
