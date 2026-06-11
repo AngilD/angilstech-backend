@@ -9,6 +9,10 @@ const router = express.Router();
 // ✅ CREATE ORDER
 router.post("/create-order", async (req, res) => {
   try {
+
+    console.log("BODY:", req.body);
+    console.log("PAYPAL_BASE_URL:", process.env.PAYPAL_BASE_URL);
+    
     const { amount } = req.body;
 
     const token = await getPaypalToken();
