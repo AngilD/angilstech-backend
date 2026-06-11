@@ -7,7 +7,7 @@ import pool from "../db.js";
 const router = express.Router();
 
 router.get("/test", (req,res)=>{
-  res.json({message: "Paypal route working"});
+  res.json({message: "Paypal route is ok"});
 });
 
 // ✅ CREATE ORDER
