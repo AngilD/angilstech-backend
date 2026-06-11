@@ -6,6 +6,10 @@ import pool from "../db.js";
 
 const router = express.Router();
 
+router.get("/test", (req,res)=>{
+  res.json({message: "Paypal route working"});
+});
+
 // ✅ CREATE ORDER
 router.post("/create-order", async (req, res) => {
   try {
