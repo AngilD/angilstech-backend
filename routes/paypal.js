@@ -8,57 +8,57 @@ const router = express.Router();
 
 console.log("PAYPAL ROUTES LOADED");
 
-router.get("/test", (req,res)=>{
-  res.json({message: "Paypal route is ok"});
-});
+// router.get("/test", (req,res)=>{
+//   res.json({message: "Paypal route is ok"});
+// });
 
 // ✅ CREATE ORDER
 router.post("/create-order", async (req, res) => {
   
     console.log("CREATE ORDER HIT");
     console.log("BODY:", req.body);
+
+  // try {
     
-  try {
-    
-    const { amount } = req.body;
+  //   const { amount } = req.body;
 
-    const token = await getPaypalToken();
+  //   const token = await getPaypalToken();
 
-    const response = await axios.post(
-      `${process.env.PAYPAL_BASE_URL}/v2/checkout/orders`,
-      {
-        intent: "CAPTURE",
-        purchase_units: [
-          {
-            amount: {
-              currency_code: "USD",
-              value: amount,
-            },
-          },
-        ],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  //   const response = await axios.post(
+  //     `${process.env.PAYPAL_BASE_URL}/v2/checkout/orders`,
+  //     {
+  //       intent: "CAPTURE",
+  //       purchase_units: [
+  //         {
+  //           amount: {
+  //             currency_code: "USD",
+  //             value: amount,
+  //           },
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
 
-    const approvalLink = response.data.links.find(
-      link => link.rel === "approve"
-    ).href;
+  //   const approvalLink = response.data.links.find(
+  //     link => link.rel === "approve"
+  //   ).href;
 
-    res.json({
-      success: true,
-      orderID: response.data.id,
-      approvalLink,
-    });
+  //   res.json({
+  //     success: true,
+  //     orderID: response.data.id,
+  //     approvalLink,
+  //   });
 
-  } catch (error) {
-    console.error("PayPal create error:", error.response?.data || error.message);
-    res.status(500).json({ error: "Create order failed" });
-  }
+  // } catch (error) {
+  //   console.error("PayPal create error:", error.response?.data || error.message);
+  //   res.status(500).json({ error: "Create order failed" });
+  // }
 });
 
 
