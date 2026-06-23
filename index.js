@@ -29,7 +29,8 @@ import paypalRoutes from "./routes/paypal.js";
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://angilstech-frontend.vercel.app"
+    "https://angilstech-frontend.vercel.app",
+    "https://www.angilstech.com"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
