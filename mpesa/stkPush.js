@@ -1,9 +1,27 @@
 import axios from "axios";
 import { getAccessToken } from "../mpesa/mPesaauth.js";
 
+  // const formattedPhone = phone.replace(/^0/, "254");
+
+  const formatPhone = (phone) => {
+  // remove spaces and plus sign
+  let cleaned = phone.replace(/\s+/g, "").replace(/^\+/, "");
+
+  // if starts with 0 → convert to 254...
+  if (cleaned.startsWith("0")) {
+    cleaned = "254" + cleaned.slice(1);
+  }
+
+  return cleaned;
+};
+
 export const sendSTKPush = async (phone, amount) => {
 
-  const formattedPhone = phone.replace(/^0/, "254");
+const formattedPhone = formatPhone(phone);
+
+if (!/^2547\d{8}$/.test(formattedPhone)) {
+  throw new Error("Invalid phone number");
+}
 
   const token = await getAccessToken();
 
